@@ -1,8 +1,6 @@
 use std::env;
 use std::fs;
 
-use super::sudoku::Sudoku;
-
 // pub fn get_sudoku() -> Sudoku {}
 
 pub fn load_file() -> Option<String> {
