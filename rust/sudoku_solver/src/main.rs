@@ -1,3 +1,6 @@
+mod argument_parsing;
+mod sudoku;
+
 fn main() {
-    println!("Hello, world!");
+    argument_parsing::load_file();
 }
