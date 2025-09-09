@@ -17,7 +17,9 @@ pub fn load_file() -> Option<String> {
 
     let filename = maybe_filename.unwrap();
 
-    let content: String = fs::read_to_string(filename).unwrap();
+    let content: String = fs::read_to_string(filename).unwrap().replace("\n", "");
+    println!("{}", content);
+    println!("{}", content.len());
 
     // We know that valid files will always contain 81 characters after trimming,
     // one for each grid square.

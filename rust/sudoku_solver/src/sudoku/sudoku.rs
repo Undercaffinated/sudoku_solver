@@ -9,6 +9,13 @@ pub struct Sudoku {
 
 #[allow(unused)]
 impl Sudoku {
+    pub fn from_file(maybe_contents: Option<String>) -> Self {
+        match maybe_contents {
+            None => Sudoku::default(),
+            Some(content) => Sudoku::from_string(content),
+        }
+    }
+
     fn from_string(input: String) -> Self {
         let input = input.trim().chars();
         let mut temp_grid: [GridSquare; 81] = [GridSquare::default(); 81];
@@ -20,10 +27,10 @@ impl Sudoku {
             incrementor += 1;
         }
 
-        Sudoku::default()
+        Self { grid: temp_grid }
     }
 
-    fn print(&self) {
+    pub fn print(&self) {
         // I'm sorry in advance.
         let mut print_object: String = String::with_capacity(132);
 
