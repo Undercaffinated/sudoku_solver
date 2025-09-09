@@ -1,13 +1,14 @@
 use std::env;
 use std::fs;
 
+#[allow(unused)]
 pub fn load_file() -> Option<String> {
     let extraction_result = extract_filename();
 
     let maybe_filename: Option<String> = match extraction_result {
         Ok(None) => None,
         Ok(Some(content)) => Some(content),
-        _ => panic!(),
+        Err(_) => panic!(),
     };
 
     if maybe_filename == None {

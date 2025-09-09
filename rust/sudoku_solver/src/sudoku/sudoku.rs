@@ -1,11 +1,13 @@
 use crate::sudoku::grid_square::GridSquare;
 
+#[allow(unused)]
 pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
     grid: [GridSquare; 81],
 }
 
+#[allow(unused)]
 impl Sudoku {
     fn from_string(input: String) -> Self {
         let input = input.trim().chars();
