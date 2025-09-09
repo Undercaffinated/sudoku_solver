@@ -1,5 +1,6 @@
 use crate::sudoku::grid_state::GridState;
 
+/// Defines a single square on a sudoku board.
 #[derive(Copy, Clone)]
 pub struct GridSquare {
     // The inked in value
@@ -20,6 +21,25 @@ pub struct GridSquare {
 }
 
 impl GridSquare {
+    pub fn from_char(input: char) -> Self {
+        Self {
+            value: match input {
+                '1' => GridState::One,
+                '2' => GridState::Two,
+                '3' => GridState::Three,
+                '4' => GridState::Four,
+                '5' => GridState::Five,
+                '6' => GridState::Six,
+                '7' => GridState::Seven,
+                '8' => GridState::Eight,
+                '9' => GridState::Nine,
+                '?' => GridState::Empty,
+                _ => panic!(),
+            },
+            ..Default::default()
+        }
+    }
+
     pub fn from_grid_state(input: GridState) -> Self {
         match input {
             GridState::Empty => Self {

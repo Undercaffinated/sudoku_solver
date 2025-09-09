@@ -8,8 +8,15 @@ pub struct Sudoku {
 
 impl Sudoku {
     fn from_string(input: String) -> Self {
-        let input = input.trim();
-        let temp_grid: [GridSquare; 81] = [GridSquare::default(); 81];
+        let input = input.trim().chars();
+        let mut temp_grid: [GridSquare; 81] = [GridSquare::default(); 81];
+
+        let mut incrementor: usize = 0;
+
+        for each in input {
+            temp_grid[incrementor] = GridSquare::from_char(each);
+            incrementor += 1;
+        }
 
         Sudoku::default()
     }
