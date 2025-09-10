@@ -99,6 +99,23 @@ impl GridSquare {
 
     /// Returns a &str representing the current state of Self.
     /// GridState::One => "1", etc.
+    pub fn to_char(&self) -> char {
+        match &self.value {
+            GridState::One => '1',
+            GridState::Two => '2',
+            GridState::Three => '3',
+            GridState::Four => '4',
+            GridState::Five => '5',
+            GridState::Six => '6',
+            GridState::Seven => '7',
+            GridState::Eight => '8',
+            GridState::Nine => '9',
+            GridState::Empty => '?',
+        }
+    }
+
+    /// Returns a &str representing the current state of Self.
+    /// GridState::One => "1", etc.
     pub fn to_str(&self) -> &str {
         match &self.value {
             GridState::One => "1",

@@ -4,7 +4,7 @@ use crate::sudoku::grid_square::GridSquare;
 pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
-    pub grid: [GridSquare; 81],
+    pub grid: [[GridSquare; 9]; 9],
 }
 
 #[allow(unused)]
@@ -17,174 +17,38 @@ impl Sudoku {
     }
 
     fn from_string(input: String) -> Self {
-        let input = input.trim().chars();
-        let mut temp_grid: [GridSquare; 81] = [GridSquare::default(); 81];
+        let input: Vec<char> = input.chars().collect();
+        let mut temp_grid: [[GridSquare; 9]; 9] = [[GridSquare::default(); 9]; 9];
 
-        let mut incrementor: usize = 0;
-
-        for each in input {
-            temp_grid[incrementor] = GridSquare::from_char(each);
-            incrementor += 1;
+        for row in 0..9 {
+            for column in 0..9 {
+                temp_grid[row][column] = GridSquare::from_char(input[9 * row + column]);
+            }
         }
 
         Self { grid: temp_grid }
     }
 
     pub fn print(&self) {
-        // I'm sorry in advance.
         let mut print_object: String = String::with_capacity(132);
 
-        // Line 1
-        print_object.push_str(self.grid[0].to_str());
-        print_object.push_str(self.grid[1].to_str());
-        print_object.push_str(self.grid[2].to_str());
-        print_object.push_str("|");
+        let mut intermediate: [[char; 12]; 11] = [['u'; 12]; 11];
 
-        print_object.push_str(self.grid[3].to_str());
-        print_object.push_str(self.grid[4].to_str());
-        print_object.push_str(self.grid[5].to_str());
-        print_object.push_str("|");
+        for row in 0..9 {
+            for column in 0..9 {
+                let target_row: usize = translate_for_printing(row);
+                let target_column: usize = translate_for_printing(column);
+                intermediate[target_row][target_column] = self.grid[row][column].to_char();
+                insert_sp_chars_for_printing(&mut intermediate);
+            }
+        }
 
-        print_object.push_str(self.grid[6].to_str());
-        print_object.push_str(self.grid[7].to_str());
-        print_object.push_str(self.grid[8].to_str());
-        print_object.push_str("\n");
+        for row in 0..11 {
+            for column in 0..12 {
+                print!("{}", intermediate[row][column]);
+            }
+        }
 
-        // Line 2
-        print_object.push_str(self.grid[9].to_str());
-        print_object.push_str(self.grid[10].to_str());
-        print_object.push_str(self.grid[11].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[12].to_str());
-        print_object.push_str(self.grid[13].to_str());
-        print_object.push_str(self.grid[14].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[15].to_str());
-        print_object.push_str(self.grid[16].to_str());
-        print_object.push_str(self.grid[17].to_str());
-        print_object.push_str("\n");
-
-        // Line 3
-        print_object.push_str(self.grid[18].to_str());
-        print_object.push_str(self.grid[19].to_str());
-        print_object.push_str(self.grid[20].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[21].to_str());
-        print_object.push_str(self.grid[22].to_str());
-        print_object.push_str(self.grid[23].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[24].to_str());
-        print_object.push_str(self.grid[25].to_str());
-        print_object.push_str(self.grid[26].to_str());
-        print_object.push_str("\n");
-
-        // Line 4
-        print_object.push_str("---+---+---\n");
-
-        // Line 5
-        print_object.push_str(self.grid[27].to_str());
-        print_object.push_str(self.grid[28].to_str());
-        print_object.push_str(self.grid[29].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[30].to_str());
-        print_object.push_str(self.grid[31].to_str());
-        print_object.push_str(self.grid[32].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[33].to_str());
-        print_object.push_str(self.grid[34].to_str());
-        print_object.push_str(self.grid[35].to_str());
-        print_object.push_str("\n");
-
-        // Line 6
-        print_object.push_str(self.grid[36].to_str());
-        print_object.push_str(self.grid[37].to_str());
-        print_object.push_str(self.grid[38].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[39].to_str());
-        print_object.push_str(self.grid[40].to_str());
-        print_object.push_str(self.grid[41].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[42].to_str());
-        print_object.push_str(self.grid[43].to_str());
-        print_object.push_str(self.grid[44].to_str());
-        print_object.push_str("\n");
-
-        // Line 7
-        print_object.push_str(self.grid[45].to_str());
-        print_object.push_str(self.grid[46].to_str());
-        print_object.push_str(self.grid[47].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[48].to_str());
-        print_object.push_str(self.grid[49].to_str());
-        print_object.push_str(self.grid[50].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[51].to_str());
-        print_object.push_str(self.grid[52].to_str());
-        print_object.push_str(self.grid[53].to_str());
-        print_object.push_str("\n");
-
-        // Line 8
-        print_object.push_str("---+---+---\n");
-
-        // Line 9
-        print_object.push_str(self.grid[54].to_str());
-        print_object.push_str(self.grid[55].to_str());
-        print_object.push_str(self.grid[56].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[57].to_str());
-        print_object.push_str(self.grid[58].to_str());
-        print_object.push_str(self.grid[59].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[60].to_str());
-        print_object.push_str(self.grid[61].to_str());
-        print_object.push_str(self.grid[62].to_str());
-        print_object.push_str("\n");
-
-        // Line 10
-        print_object.push_str(self.grid[63].to_str());
-        print_object.push_str(self.grid[64].to_str());
-        print_object.push_str(self.grid[65].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[66].to_str());
-        print_object.push_str(self.grid[67].to_str());
-        print_object.push_str(self.grid[68].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[69].to_str());
-        print_object.push_str(self.grid[70].to_str());
-        print_object.push_str(self.grid[71].to_str());
-        print_object.push_str("\n");
-
-        // Line 11
-        print_object.push_str(self.grid[72].to_str());
-        print_object.push_str(self.grid[73].to_str());
-        print_object.push_str(self.grid[74].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[75].to_str());
-        print_object.push_str(self.grid[76].to_str());
-        print_object.push_str(self.grid[77].to_str());
-        print_object.push_str("|");
-
-        print_object.push_str(self.grid[78].to_str());
-        print_object.push_str(self.grid[79].to_str());
-        print_object.push_str(self.grid[80].to_str());
-        print_object.push_str("\n");
-
-        // Print the final object
         println!("{}", print_object);
     }
 }
@@ -192,7 +56,39 @@ impl Sudoku {
 impl Default for Sudoku {
     fn default() -> Self {
         Self {
-            grid: [GridSquare::default(); 81],
+            grid: [[GridSquare::default(); 9]; 9],
+        }
+    }
+}
+
+fn translate_for_printing(index: usize) -> usize {
+    match index {
+        0 | 1 | 2 => index,
+        3 | 4 | 5 => index + 1,
+        6 | 7 | 8 => index + 2,
+        _ => panic!(),
+    }
+}
+
+fn insert_sp_chars_for_printing(printer_object: &mut [[char; 12]; 11]) {
+    for row in 0..11 {
+        for column in 0..12 {
+            let target_coordinates = (row, column);
+            match target_coordinates {
+                (3, 3) => printer_object[row][column] = '+',
+                (3, 7) => printer_object[row][column] = '+',
+                (7, 3) => printer_object[row][column] = '+',
+                (7, 7) => printer_object[row][column] = '+',
+
+                (3, 0..11) => printer_object[row][column] = '-',
+                (7, 0..11) => printer_object[row][column] = '-',
+                (0..11, 3) => printer_object[row][column] = '|',
+                (0..11, 7) => printer_object[row][column] = '|',
+
+                (0..11, 11) => printer_object[row][column] = '\n',
+
+                (_, _) => continue,
+            }
         }
     }
 }
