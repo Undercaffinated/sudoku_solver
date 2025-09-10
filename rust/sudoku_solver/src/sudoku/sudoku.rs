@@ -4,7 +4,7 @@ use crate::sudoku::grid_square::GridSquare;
 pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
-    grid: [GridSquare; 81],
+    pub grid: [GridSquare; 81],
 }
 
 #[allow(unused)]
