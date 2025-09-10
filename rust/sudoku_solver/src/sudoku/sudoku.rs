@@ -30,9 +30,8 @@ impl Sudoku {
     }
 
     pub fn print(&self) {
-        let mut print_object: String = String::with_capacity(132);
-
         let mut intermediate: [[char; 12]; 11] = [['u'; 12]; 11];
+        println!();
 
         for row in 0..9 {
             for column in 0..9 {
@@ -48,8 +47,7 @@ impl Sudoku {
                 print!("{}", intermediate[row][column]);
             }
         }
-
-        println!("{}", print_object);
+        println!();
     }
 }
 
