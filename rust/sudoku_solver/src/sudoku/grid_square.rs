@@ -23,6 +23,53 @@ pub struct GridSquare {
 
 #[allow(unused)]
 impl GridSquare {
+    /// Returns true iff only one notes field is true.
+    pub fn has_one_possible_value(&self) -> bool {
+        let mut accumulator: usize = 0;
+        if self.one   { accumulator += 1; }
+        if self.two   { accumulator += 1; }
+        if self.four  { accumulator += 1; }
+        if self.five  { accumulator += 1; }
+        if self.six   { accumulator += 1; }
+        if self.seven { accumulator += 1; }
+        if self.eight { accumulator += 1; }
+        if self.nine  { accumulator += 1; }
+        if self.three { accumulator += 1; }
+
+        match accumulator {
+            1 => true,
+            _ => false,
+        }
+
+    }
+
+    pub fn only_possible_value(&self) -> GridState {
+        if self.has_one_possible_value() {
+            if self.one { return GridState::One; } 
+            else if self.two {
+                return GridState::Two;
+            } else if self.three {
+                return GridState::Three;
+            } else if self.four {
+                return GridState::Four;
+            } else if self.five {
+                return GridState::Five;
+            } else if self.six {
+                return GridState::Six;
+            } else if self.seven {
+                return GridState::Seven;
+            } else if self.eight {
+                return GridState::Eight;
+            } else if self.nine {
+                return GridState::Nine;
+            } else {
+                panic!();
+            }
+        } else {
+            panic!();
+        }
+    }
+
     // Only constructor for GridSquares, since it handles the logic well.
     // Adding more constructor methods would increase the surface for bugs to appear.
     pub fn from_grid_state(input: GridState) -> Self {
@@ -136,4 +183,60 @@ impl Default for GridSquare {
             nine: true,
         }
     }
+}
+
+// Unit Tests
+
+#[test]
+fn has_one_possible_value_all_false() {
+    // Test 1: No notes are true, should return false.
+    let t = GridSquare {
+        value: GridState::One,
+        one: false,
+        two: false,
+        three: false,
+        four: false,
+        five: false,
+        six: false,
+        seven: false,
+        eight: false,
+        nine: false,
+    };
+    assert_eq!(t.has_one_possible_value(), false);
+}
+
+#[test]
+fn has_one_possible_value_single_true() {
+    // Test 1: No notes are true, should return false.
+    let t = GridSquare {
+        value: GridState::Empty,
+        one: false,
+        two: false,
+        three: false,
+        four: true,
+        five: false,
+        six: false,
+        seven: false,
+        eight: false,
+        nine: false,
+    };
+    assert_eq!(t.has_one_possible_value(), true);
+}
+
+#[test]
+fn has_one_possible_value_multiple_true() {
+    // Test 1: No notes are true, should return false.
+    let t = GridSquare {
+        value: GridState::Empty,
+        one: true,
+        two: false,
+        three: false,
+        four: true,
+        five: false,
+        six: false,
+        seven: true,
+        eight: false,
+        nine: false,
+    };
+    assert_eq!(t.has_one_possible_value(), false);
 }

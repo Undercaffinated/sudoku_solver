@@ -1,1 +1,1 @@
-mod setup;
+pub mod only_possibility;

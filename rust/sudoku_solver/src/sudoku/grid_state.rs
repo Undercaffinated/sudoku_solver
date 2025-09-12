@@ -1,4 +1,4 @@
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq)]
 /// Possible values that can be written into a sudoku grid square.
 pub enum GridState {
     One,
@@ -27,6 +27,23 @@ impl GridState {
             '9' => GridState::Nine,
             '?' => GridState::Empty,
             _ => panic!(),
+        }
+    }
+}
+
+impl GridState {
+    pub fn to_char(&self) -> char {
+        match self {
+            GridState::One => '1',
+            GridState::Two => '2',
+            GridState::Three => '3',
+            GridState::Four => '4',
+            GridState::Five => '5',
+            GridState::Six => '6',
+            GridState::Seven => '7',
+            GridState::Eight => '8',
+            GridState::Nine => '9',
+            GridState::Empty => '?',
         }
     }
 }
