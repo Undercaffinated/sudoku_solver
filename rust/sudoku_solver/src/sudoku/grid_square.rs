@@ -23,25 +23,6 @@ pub struct GridSquare {
 
 #[allow(unused)]
 impl GridSquare {
-    pub fn from_char(input: char) -> Self {
-        Self {
-            value: match input {
-                '1' => GridState::One,
-                '2' => GridState::Two,
-                '3' => GridState::Three,
-                '4' => GridState::Four,
-                '5' => GridState::Five,
-                '6' => GridState::Six,
-                '7' => GridState::Seven,
-                '8' => GridState::Eight,
-                '9' => GridState::Nine,
-                '?' => GridState::Empty,
-                _ => panic!(),
-            },
-            ..Default::default()
-        }
-    }
-
     pub fn from_grid_state(input: GridState) -> Self {
         match input {
             GridState::Empty => Self {
@@ -63,23 +44,31 @@ impl GridSquare {
         }
     }
 
-    pub fn from_str(slice: &str) -> Self {
-        Self {
-            value: match slice {
-                "1" => GridState::One,
-                "2" => GridState::Two,
-                "3" => GridState::Three,
-                "4" => GridState::Four,
-                "5" => GridState::Five,
-                "6" => GridState::Six,
-                "7" => GridState::Seven,
-                "8" => GridState::Eight,
-                "9" => GridState::Nine,
-                "?" => GridState::Empty,
-                _ => panic!(),
-            },
-            ..GridSquare::default()
+    pub fn remove_note(&mut self, note: GridState) {
+        match note {
+            GridState::One => self.one = false,
+            GridState::Two => self.two = false,
+            GridState::Three => self.three = false,
+            GridState::Four => self.four = false,
+            GridState::Five => self.five = false,
+            GridState::Six => self.six = false,
+            GridState::Seven => self.seven = false,
+            GridState::Eight => self.eight = false,
+            GridState::Nine => self.nine = false,
+            _ => (),
         }
+    }
+
+    pub fn remove_all_notes(&mut self) {
+        self.one = false;
+        self.two = false;
+        self.three = false;
+        self.four = false;
+        self.five = false;
+        self.six = false;
+        self.seven = false;
+        self.eight = false;
+        self.nine = false;
     }
 
     pub fn to_u8(&self) -> u8 {

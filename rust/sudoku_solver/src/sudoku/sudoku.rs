@@ -1,4 +1,5 @@
 use crate::sudoku::grid_square::GridSquare;
+use crate::sudoku::grid_state::GridState;
 
 #[allow(unused)]
 pub struct Sudoku {
@@ -22,7 +23,8 @@ impl Sudoku {
 
         for row in 0..9 {
             for column in 0..9 {
-                temp_grid[row][column] = GridSquare::from_char(input[9 * row + column]);
+                temp_grid[row][column] =
+                    GridSquare::from_grid_state(GridState::from_char(input[9 * row + column]));
             }
         }
 
@@ -48,6 +50,17 @@ impl Sudoku {
             }
         }
         println!();
+    }
+
+    /// Writes a final value into a particular square on the sudoku board.
+    /// Name comes from the idea that a pen is permanent.
+    fn ink_square(&mut self, row: usize, column: usize, value: GridState) {
+        self.grid[row][column] = GridSquare::from_grid_state(value);
+        // This is redundant: self.grid[row][column].remove_all_notes();
+    }
+
+    fn remove_note(&mut self, row: usize, column: usize, value: GridState) {
+        self.grid[row][column].remove_note(value);
     }
 }
 
