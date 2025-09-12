@@ -7,7 +7,6 @@ use crate::argument_parsing::load_file;
 
 fn main() {
     let mut board: Sudoku = Sudoku::from_file(load_file());
-    board.print();
     board.init_notes();
     board.solve();
 }

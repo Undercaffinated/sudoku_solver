@@ -14,7 +14,7 @@ pub fn ink_by_elimination(board: &mut Sudoku, row: usize, column: usize) {
 
     if board.grid[row][column].has_one_possible_value() {
         let val = board.grid[row][column].only_possible_value();
-        println!("Found a {} at location ({}, {}): Only one possible note.", val.to_char(), row, column);
+        println!("Found a {} at location (row: {}, column: {}): Only one possible note.", val.to_char(), row, column);
         board.grid[row][column].value = val;
         board.grid[row][column].remove_all_notes();
     }

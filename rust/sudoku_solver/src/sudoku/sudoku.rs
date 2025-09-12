@@ -31,6 +31,7 @@ impl Sudoku {
             }
 
             if self.check_if_stuck() {
+                println!("Got stuck");
                 break;
             }
         }
@@ -133,6 +134,12 @@ impl Sudoku {
         }
         false
     }
+
+    // Once a board is marked as solved, this function can verify that the found
+    // solution obeys the rules of the game (i.e. no duplicate numbers in any row,
+    // column, or block).
+    //fn verify_solution(&self) -> bool {}
+    
 }
 
 impl Default for Sudoku {
