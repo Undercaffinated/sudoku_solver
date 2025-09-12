@@ -6,6 +6,6 @@ This tool loads a board from a text file whose filename is supplied as an argume
 
 For the Rust implementation, navigate to ~sudoku_solver/rust/sudoku_solver, then use:
 ```bash
-cargo run boards/examples/easy_example_1
+cargo run boards/examples/easy_example_1.txt
 
 ```
