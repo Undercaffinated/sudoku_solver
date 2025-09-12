@@ -10,12 +10,14 @@ pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
     pub grid: [[GridSquare; 9]; 9],
+    previous_grid: [[GridSquare; 9]; 9],
 }
 
 #[allow(unused)]
 impl Sudoku {
     pub fn solve(&mut self) {
         loop {
+            self.previous_grid = self.grid;
             for row in 0..9 {
                 for column in 0..9 {
                     remove_conflicting_notes(self, row, column);
@@ -25,6 +27,10 @@ impl Sudoku {
 
             self.print();
             if self.check_if_solved() {
+                break;
+            }
+
+            if self.check_if_stuck() {
                 break;
             }
         }
@@ -48,7 +54,10 @@ impl Sudoku {
             }
         }
 
-        Self { grid: temp_grid }
+        Self { 
+            grid: temp_grid,
+            ..Default::default()
+        }
     }
 
     /// After initial construction, all empty squares on a sudoku board will claim they can
@@ -115,12 +124,22 @@ impl Sudoku {
         }
         true
     }
+
+    // Returns true when the function detects that no change has occurred
+    // between solving iterations.
+    fn check_if_stuck(&self) -> bool {
+        if self.grid == self.previous_grid {
+            return true;
+        }
+        false
+    }
 }
 
 impl Default for Sudoku {
     fn default() -> Self {
         Self {
             grid: [[GridSquare::default(); 9]; 9],
+            previous_grid: [[GridSquare::default(); 9]; 9]
         }
     }
 }
@@ -177,4 +196,21 @@ fn remove_conflicting_notes(board: &mut Sudoku, row: usize, column: usize) {
     for (r, c) in targets {
         board.grid[r][c].remove_note(note_to_remove);
     }
+}
+
+
+// Tests
+#[test]
+fn check_if_stuck_matching_grids() {
+    let t: Sudoku = Sudoku { ..Default::default() };
+    assert_eq!(t.grid, t.previous_grid);
+}
+
+#[test]
+fn check_if_stuck_different_grids() {
+    let grid_1: [[GridSquare; 9]; 9] = [[GridSquare::from_grid_state(GridState::One); 9]; 9];
+    let grid_2: [[GridSquare; 9]; 9] = [[GridSquare::default(); 9]; 9];
+    let t: Sudoku = Sudoku { grid: grid_1, previous_grid: grid_2 };
+
+    t.check_if_stuck();
 }

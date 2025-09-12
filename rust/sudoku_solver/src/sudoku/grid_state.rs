@@ -1,4 +1,4 @@
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 /// Possible values that can be written into a sudoku grid square.
 pub enum GridState {
     One,
