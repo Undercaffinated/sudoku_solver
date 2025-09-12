@@ -1,6 +1,8 @@
 use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::grid_state::GridState;
 
+use super::block::*;
+
 #[allow(unused)]
 pub struct Sudoku {
     // Index 0 is the upper-left corner square.
@@ -72,6 +74,7 @@ impl Default for Sudoku {
     }
 }
 
+/// Maps a given index on a working sudoku board onto the correct index of a printable board.
 fn translate_for_printing(index: usize) -> usize {
     match index {
         0 | 1 | 2 => index,
@@ -101,5 +104,49 @@ fn insert_sp_chars_for_printing(printer_object: &mut [[char; 12]; 11]) {
                 (_, _) => continue,
             }
         }
+    }
+}
+
+/// After initial construction, all empty squares on a sudoku board will claim they can
+/// be any number, based on their notes. This removes all impossible note values based on
+/// the inked values on the board. This function is expensive and should be called sparingly.
+fn init_notes(grid: &mut [[GridSquare; 9]; 9]) {
+    // For each square on the board,
+    // Check if it contains an inked value
+    // If so, remove that value from the notes of all containing groups.
+    for row in 0..9 {
+        for column in 0..9 {
+            match grid[row][column].value {
+                // If the square is empty, it doesn't contribute to removing notes.
+                GridState::Empty => continue,
+
+                // If the square contains an inked value, we need to erase notes s.t.
+                // all squares in the same row, column, and block cannot be that value.
+                _ => remove_conflicting_notes(grid, row, column, grid[row][column].value),
+            }
+        }
+    }
+}
+
+fn remove_conflicting_notes(
+    grid: &mut [[GridSquare; 9]; 9],
+    row: usize,
+    column: usize,
+    note_to_remove: GridState,
+) {
+    // Remove notes from same row
+    for columns in 0..9 {
+        grid[row][columns].remove_note(note_to_remove);
+    }
+    // Remove notes from same column
+    for rows in 0..9 {
+        grid[rows][column].remove_note(note_to_remove);
+    }
+    // Remove notes from same 3x3 block
+    let targets: [(usize, usize); 9] =
+        map_block_to_array_of_coordinates(map_coordinates_to_block(row, column));
+
+    for (r, c) in targets {
+        grid[r][c].remove_note(note_to_remove);
     }
 }

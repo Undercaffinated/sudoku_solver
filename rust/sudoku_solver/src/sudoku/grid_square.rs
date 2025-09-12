@@ -5,7 +5,7 @@ use crate::sudoku::grid_state::GridState;
 #[derive(Copy, Clone)]
 pub struct GridSquare {
     // The inked in value
-    value: GridState,
+    pub value: GridState,
 
     // Some solving patterns require knowing what values a square might contain.
     // These values are intended to serve that purpose.
@@ -23,6 +23,8 @@ pub struct GridSquare {
 
 #[allow(unused)]
 impl GridSquare {
+    // Only constructor for GridSquares, since it handles the logic well.
+    // Adding more constructor methods would increase the surface for bugs to appear.
     pub fn from_grid_state(input: GridState) -> Self {
         match input {
             GridState::Empty => Self {
@@ -86,8 +88,6 @@ impl GridSquare {
         }
     }
 
-    /// Returns a &str representing the current state of Self.
-    /// GridState::One => "1", etc.
     pub fn to_char(&self) -> char {
         match &self.value {
             GridState::One => '1',
