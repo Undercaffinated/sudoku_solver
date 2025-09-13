@@ -28,13 +28,13 @@ impl GridSquare {
         let mut accumulator: usize = 0;
         if self.one   { accumulator += 1; }
         if self.two   { accumulator += 1; }
+        if self.three { accumulator += 1; }
         if self.four  { accumulator += 1; }
         if self.five  { accumulator += 1; }
         if self.six   { accumulator += 1; }
         if self.seven { accumulator += 1; }
         if self.eight { accumulator += 1; }
         if self.nine  { accumulator += 1; }
-        if self.three { accumulator += 1; }
 
         match accumulator {
             1 => true,
@@ -165,6 +165,23 @@ impl GridSquare {
             GridState::Nine => "9",
             GridState::Empty => "?",
         }
+    }
+
+    /// Returns a vector representing which notes are true.
+    pub fn notes(&self) -> Vec<usize> {
+        let mut v: Vec<usize> = Vec::with_capacity(9);
+        
+        if self.one   { v.push(1); }
+        if self.two   { v.push(2); }
+        if self.three { v.push(3); }
+        if self.four  { v.push(4); }
+        if self.five  { v.push(5); }
+        if self.six   { v.push(6); }
+        if self.seven { v.push(7); }
+        if self.eight { v.push(8); }
+        if self.nine  { v.push(0); }
+
+        v
     }
 }
 

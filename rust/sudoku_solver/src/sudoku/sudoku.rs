@@ -18,6 +18,8 @@ impl Sudoku {
     pub fn solve(&mut self) {
         loop {
             self.previous_grid = self.grid;
+            self.print();
+
             for row in 0..9 {
                 for column in 0..9 {
                     remove_conflicting_notes(self, row, column);
@@ -25,7 +27,6 @@ impl Sudoku {
                 }
             }
 
-            self.print();
             if self.check_if_solved() {
                 break;
             }
@@ -55,7 +56,7 @@ impl Sudoku {
             }
         }
 
-        Self { 
+        Self {
             grid: temp_grid,
             ..Default::default()
         }
@@ -139,14 +140,13 @@ impl Sudoku {
     // solution obeys the rules of the game (i.e. no duplicate numbers in any row,
     // column, or block).
     //fn verify_solution(&self) -> bool {}
-    
 }
 
 impl Default for Sudoku {
     fn default() -> Self {
         Self {
             grid: [[GridSquare::default(); 9]; 9],
-            previous_grid: [[GridSquare::default(); 9]; 9]
+            previous_grid: [[GridSquare::default(); 9]; 9],
         }
     }
 }
@@ -205,11 +205,12 @@ fn remove_conflicting_notes(board: &mut Sudoku, row: usize, column: usize) {
     }
 }
 
-
 // Tests
 #[test]
 fn check_if_stuck_matching_grids() {
-    let t: Sudoku = Sudoku { ..Default::default() };
+    let t: Sudoku = Sudoku {
+        ..Default::default()
+    };
     assert_eq!(t.grid, t.previous_grid);
 }
 
@@ -217,7 +218,10 @@ fn check_if_stuck_matching_grids() {
 fn check_if_stuck_different_grids() {
     let grid_1: [[GridSquare; 9]; 9] = [[GridSquare::from_grid_state(GridState::One); 9]; 9];
     let grid_2: [[GridSquare; 9]; 9] = [[GridSquare::default(); 9]; 9];
-    let t: Sudoku = Sudoku { grid: grid_1, previous_grid: grid_2 };
+    let t: Sudoku = Sudoku {
+        grid: grid_1,
+        previous_grid: grid_2,
+    };
 
     t.check_if_stuck();
 }
