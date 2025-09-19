@@ -1,7 +1,7 @@
 use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::grid_state::GridState;
 
-use crate::sudoku::solving_logic::only_possibility::*;
+use crate::sudoku::solving_logic::single_note_method::*;
 
 use super::block::*;
 
@@ -23,7 +23,7 @@ impl Sudoku {
             for row in 0..9 {
                 for column in 0..9 {
                     remove_conflicting_notes(self, row, column);
-                    ink_by_elimination(self, row, column);
+                    single_note_method(self, row, column);
                 }
             }
 
@@ -205,7 +205,8 @@ fn remove_conflicting_notes(board: &mut Sudoku, row: usize, column: usize) {
     }
 }
 
-// Tests
+
+// Tests -----------------------------------------------------------------------------------------
 #[test]
 fn check_if_stuck_matching_grids() {
     let t: Sudoku = Sudoku {
