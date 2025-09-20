@@ -33,15 +33,9 @@ pub fn map_block_to_array_of_coordinates(block: BlockNumber) -> [(usize, usize);
         // BlockNumber => [(row_index, column_index); 9]
         // Top left
         BlockNumber::One => [
-            (0, 0),
-            (0, 1),
-            (0, 2),
-            (1, 0),
-            (1, 1),
-            (1, 2),
-            (2, 0),
-            (2, 1),
-            (2, 2),
+            (0, 0), (0, 1), (0, 2),
+            (1, 0), (1, 1), (1, 2),
+            (2, 0), (2, 1), (2, 2),
         ],
         // Top center
         BlockNumber::Two => [

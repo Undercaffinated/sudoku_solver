@@ -2,3 +2,6 @@
 // of squares, typically, but not always, in a row, column, or block. Thus,
 // it is useful to collect such functions together so they can be called by other
 // solving logic modules.
+
+
+pub fn get_row(row: usize) -> Vec<

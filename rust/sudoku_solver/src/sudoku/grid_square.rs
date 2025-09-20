@@ -21,8 +21,14 @@ pub struct GridSquare {
     nine: bool,
 }
 
-#[allow(unused)]
+
 impl GridSquare {
+    /// Inks in a given value
+    pub fn ink(&mut self, number: GridState) {
+        self.value = number;
+        self.remove_all_notes();
+    }
+
     /// Returns true iff only one notes field is true.
     pub fn has_one_possible_value(&self) -> bool {
         let mut accumulator: usize = 0;
@@ -46,9 +52,8 @@ impl GridSquare {
     pub fn only_possible_value(&self) -> GridState {
         if self.has_one_possible_value() {
             if self.one { return GridState::One; } 
-            else if self.two {
-                return GridState::Two;
-            } else if self.three {
+            else if self.two { return GridState::Two; } 
+            else if self.three {
                 return GridState::Three;
             } else if self.four {
                 return GridState::Four;
@@ -93,6 +98,23 @@ impl GridSquare {
         }
     }
 
+    /// Returns true if the indicated note is true.
+    /// Example: ```check_notes(1) -> true``` iff ```self.one == true```
+    pub fn check_note(&self, note: usize) -> bool {
+        match note {
+            1 => self.one,
+            2 => self.two,
+            3 => self.three,
+            4 => self.four,
+            5 => self.five,
+            6 => self.six,
+            7 => self.seven,
+            8 => self.eight,
+            9 => self.nine,
+            _ => false
+        }
+    }
+    
     pub fn remove_note(&mut self, note: GridState) {
         match note {
             GridState::One => self.one = false,
@@ -168,7 +190,7 @@ impl GridSquare {
     }
 
     /// Returns a vector representing which notes are true.
-    pub fn notes(&self) -> Vec<usize> {
+    pub fn notes_vector(&self) -> Vec<usize> {
         let mut v: Vec<usize> = Vec::with_capacity(9);
         
         if self.one   { v.push(1); }
@@ -182,6 +204,23 @@ impl GridSquare {
         if self.nine  { v.push(0); }
 
         v
+    }
+
+    /// Returns a [u8; 9] array representing which notes are true.
+    pub fn notes_array(&self) -> [u8; 9] {
+        let mut a: [u8; 9] = [0; 9];
+        
+        if self.one   { a[0] = 1 }
+        if self.two   { a[1] = 1 }
+        if self.three { a[2] = 1 }
+        if self.four  { a[3] = 1 }
+        if self.five  { a[4] = 1 }
+        if self.six   { a[5] = 1 }
+        if self.seven { a[6] = 1 }
+        if self.eight { a[7] = 1 }
+        if self.nine  { a[8] = 1 }
+
+        a
     }
 }
 
