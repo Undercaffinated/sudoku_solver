@@ -22,7 +22,8 @@ impl BlockNumber {
             7 => BlockNumber::Seven,
             8 => BlockNumber::Eight,
             9 => BlockNumber::Nine,
-            _ => panic!()
+            0 => panic!("Was given a value of 0!"),
+            _ => panic!("Was given a value greater than 9!"),
         }
     }
 }

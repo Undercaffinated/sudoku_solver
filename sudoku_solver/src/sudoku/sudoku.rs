@@ -72,6 +72,8 @@ impl Sudoku {
     }
 
 
+
+
 }
 
 
@@ -134,18 +136,6 @@ impl Sudoku {
             }
         }
     }
-
-    /// Writes a final value into a particular square on the sudoku board.
-    /// Name comes from the idea that a pen is permanent.
-    fn ink_square(&mut self, row: usize, column: usize, value: GridState) {
-        self.grid[row][column] = GridSquare::from_grid_state(value);
-        // This is redundant: self.grid[row][column].remove_all_notes();
-    }
-
-    fn remove_note(&mut self, row: usize, column: usize, value: GridState) {
-        self.grid[row][column].remove_note(value);
-    }
-
 }
 
 
@@ -239,6 +229,9 @@ fn remove_conflicting_notes(board: &mut Sudoku, row: usize, column: usize) {
         board.grid[r][c].remove_note(note_to_remove);
     }
 }
+
+
+
 
 
 // Tests -----------------------------------------------------------------------------------------

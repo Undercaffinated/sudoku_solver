@@ -141,21 +141,7 @@ impl GridSquare {
         self.nine = false;
     }
 
-    pub fn to_u8(&self) -> u8 {
-        match &self.value {
-            GridState::One => 1u8,
-            GridState::Two => 2u8,
-            GridState::Three => 3u8,
-            GridState::Four => 4u8,
-            GridState::Five => 5u8,
-            GridState::Six => 6u8,
-            GridState::Seven => 7u8,
-            GridState::Eight => 8u8,
-            GridState::Nine => 8u8,
-            GridState::Empty => 0u8,
-        }
-    }
-
+    /// Example: ```GridState::One => '1'``` etc.
     pub fn to_char(&self) -> char {
         match &self.value {
             GridState::One => '1',
@@ -169,40 +155,6 @@ impl GridSquare {
             GridState::Nine => '9',
             GridState::Empty => '?',
         }
-    }
-
-    /// Returns a &str representing the current state of Self.
-    /// GridState::One => "1", etc.
-    pub fn to_str(&self) -> &str {
-        match &self.value {
-            GridState::One => "1",
-            GridState::Two => "2",
-            GridState::Three => "3",
-            GridState::Four => "4",
-            GridState::Five => "5",
-            GridState::Six => "6",
-            GridState::Seven => "7",
-            GridState::Eight => "8",
-            GridState::Nine => "9",
-            GridState::Empty => "?",
-        }
-    }
-
-    /// Returns a vector representing which notes are true.
-    pub fn notes_vector(&self) -> Vec<usize> {
-        let mut v: Vec<usize> = Vec::with_capacity(9);
-        
-        if self.one   { v.push(1); }
-        if self.two   { v.push(2); }
-        if self.three { v.push(3); }
-        if self.four  { v.push(4); }
-        if self.five  { v.push(5); }
-        if self.six   { v.push(6); }
-        if self.seven { v.push(7); }
-        if self.eight { v.push(8); }
-        if self.nine  { v.push(0); }
-
-        v
     }
 
     /// Returns a [u8; 9] array representing which notes are true.
@@ -240,8 +192,66 @@ impl Default for GridSquare {
     }
 }
 
-// Unit Tests
 
+// Currently Unused Methods
+#[allow(unused)]
+impl GridSquare {
+    /// Returns a vector representing which notes are true.
+    pub fn notes_vector(&self) -> Vec<usize> {
+        let mut v: Vec<usize> = Vec::with_capacity(9);
+        
+        if self.one   { v.push(1); }
+        if self.two   { v.push(2); }
+        if self.three { v.push(3); }
+        if self.four  { v.push(4); }
+        if self.five  { v.push(5); }
+        if self.six   { v.push(6); }
+        if self.seven { v.push(7); }
+        if self.eight { v.push(8); }
+        if self.nine  { v.push(0); }
+
+        v
+    }
+
+        /// Returns a &str representing the current state of Self.
+    /// GridState::One => "1", etc.
+    pub fn to_str(&self) -> &str {
+        match &self.value {
+            GridState::One => "1",
+            GridState::Two => "2",
+            GridState::Three => "3",
+            GridState::Four => "4",
+            GridState::Five => "5",
+            GridState::Six => "6",
+            GridState::Seven => "7",
+            GridState::Eight => "8",
+            GridState::Nine => "9",
+            GridState::Empty => "?",
+        }
+    }
+
+    pub fn to_u8(&self) -> u8 {
+    match &self.value {
+        GridState::One => 1u8,
+        GridState::Two => 2u8,
+        GridState::Three => 3u8,
+        GridState::Four => 4u8,
+        GridState::Five => 5u8,
+        GridState::Six => 6u8,
+        GridState::Seven => 7u8,
+        GridState::Eight => 8u8,
+        GridState::Nine => 8u8,
+        GridState::Empty => 0u8,
+    }
+}
+
+
+}
+
+
+
+
+// Unit Tests
 #[test]
 fn has_one_possible_value_all_false() {
     // Test 1: No notes are true, should return false.
