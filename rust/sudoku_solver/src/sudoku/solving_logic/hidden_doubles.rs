@@ -8,7 +8,6 @@
 // Example:
 // Given row: [1, (2,3), (2,3) | ... | ... ], none of the squares after the first | can be 2 or 3.
 
-use std::collections::HashMap;
 
 use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::sudoku::Sudoku;
@@ -28,7 +27,7 @@ fn find_hidden_pairs(board: &mut Sudoku) {
                 coordinates: c,
             };
 
-            if v.notes().len() == 2 {
+            if v.notes_vector().len() == 2 {
                 vec_1.push(m);
             }
         }

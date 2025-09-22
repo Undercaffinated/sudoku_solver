@@ -1,5 +1,6 @@
 use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::grid_state::GridState;
+use crate::sudoku::coordinates::Coordinates;
 
 use crate::sudoku::solving_logic::single_note_method::*;
 
@@ -13,7 +14,7 @@ pub struct Sudoku {
     previous_grid: [[GridSquare; 9]; 9],
 }
 
-#[allow(unused)]
+// Solving Methods
 impl Sudoku {
     pub fn solve(&mut self) {
         loop {
@@ -38,6 +39,33 @@ impl Sudoku {
         }
     }
 
+    /// Returns true when every square has been inked in.
+    fn check_if_solved(&mut self) -> bool {
+        for row in 0..9 {
+            for column in 0..9 {
+                if self.grid[row][column].value == GridState::Empty {
+                    return false;
+                }
+            }
+        }
+        true
+    }
+
+    /// Returns true when the function detects that no change has occurred
+    /// between solving iterations.
+    fn check_if_stuck(&self) -> bool {
+        if self.grid == self.previous_grid {
+            return true;
+        }
+        false
+    }
+
+
+}
+
+
+// Constructor-Style Functions
+impl Sudoku {
     pub fn from_file(maybe_contents: Option<String>) -> Self {
         match maybe_contents {
             None => Sudoku::default(),
@@ -61,7 +89,20 @@ impl Sudoku {
             ..Default::default()
         }
     }
+}
 
+
+// Getters and Setters
+impl Sudoku {
+    pub fn get_square(&mut self, coordinates: Coordinates) -> &mut GridSquare {
+        &mut self.grid[coordinates.row_index][coordinates.column_index]
+    }
+}
+
+
+
+// For managing notes and inked values
+impl Sudoku {
     /// After initial construction, all empty squares on a sudoku board will claim they can
     /// be any number, based on their notes. This removes all impossible note values based on
     /// the inked values on the board. This function is expensive and should be called sparingly.
@@ -83,6 +124,22 @@ impl Sudoku {
         }
     }
 
+    /// Writes a final value into a particular square on the sudoku board.
+    /// Name comes from the idea that a pen is permanent.
+    fn ink_square(&mut self, row: usize, column: usize, value: GridState) {
+        self.grid[row][column] = GridSquare::from_grid_state(value);
+        // This is redundant: self.grid[row][column].remove_all_notes();
+    }
+
+    fn remove_note(&mut self, row: usize, column: usize, value: GridState) {
+        self.grid[row][column].remove_note(value);
+    }
+
+}
+
+
+// Misc
+impl Sudoku {
     pub fn print(&self) {
         let mut intermediate: [[char; 12]; 11] = [['u'; 12]; 11];
         println!();
@@ -104,43 +161,8 @@ impl Sudoku {
         println!();
     }
 
-    /// Writes a final value into a particular square on the sudoku board.
-    /// Name comes from the idea that a pen is permanent.
-    fn ink_square(&mut self, row: usize, column: usize, value: GridState) {
-        self.grid[row][column] = GridSquare::from_grid_state(value);
-        // This is redundant: self.grid[row][column].remove_all_notes();
-    }
-
-    fn remove_note(&mut self, row: usize, column: usize, value: GridState) {
-        self.grid[row][column].remove_note(value);
-    }
-
-    /// Returns true when every square has been inked in.
-    fn check_if_solved(&mut self) -> bool {
-        for row in 0..9 {
-            for column in 0..9 {
-                if self.grid[row][column].value == GridState::Empty {
-                    return false;
-                }
-            }
-        }
-        true
-    }
-
-    // Returns true when the function detects that no change has occurred
-    // between solving iterations.
-    fn check_if_stuck(&self) -> bool {
-        if self.grid == self.previous_grid {
-            return true;
-        }
-        false
-    }
-
-    // Once a board is marked as solved, this function can verify that the found
-    // solution obeys the rules of the game (i.e. no duplicate numbers in any row,
-    // column, or block).
-    //fn verify_solution(&self) -> bool {}
 }
+
 
 impl Default for Sudoku {
     fn default() -> Self {
@@ -151,6 +173,7 @@ impl Default for Sudoku {
     }
 }
 
+
 /// Maps a given index on a working sudoku board onto the correct index of a printable board.
 fn translate_for_printing(index: usize) -> usize {
     match index {
@@ -160,6 +183,7 @@ fn translate_for_printing(index: usize) -> usize {
         _ => panic!(),
     }
 }
+
 
 fn insert_sp_chars_for_printing(printer_object: &mut [[char; 12]; 11]) {
     for row in 0..11 {
@@ -183,6 +207,7 @@ fn insert_sp_chars_for_printing(printer_object: &mut [[char; 12]; 11]) {
         }
     }
 }
+
 
 /// Removes notes from containing row, column, and block, assuming the given square
 /// is inked in.
