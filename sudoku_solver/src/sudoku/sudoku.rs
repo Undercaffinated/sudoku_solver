@@ -2,7 +2,7 @@ use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::grid_state::GridState;
 use crate::sudoku::coordinates::Coordinates;
 
-use crate::sudoku::solving_logic::single_note_method::*;
+use crate::sudoku::solving_logic::{exclusive_note_method::*, single_note_method::*};
 
 use super::block::*;
 
@@ -11,7 +11,7 @@ pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
     pub grid: [[GridSquare; 9]; 9],
-    previous_grid: [[GridSquare; 9]; 9],
+    pub previous_grid: [[GridSquare; 9]; 9],
 }
 
 // Solving Methods
@@ -21,21 +21,24 @@ impl Sudoku {
             self.previous_grid = self.grid;
             self.print();
 
-            for row in 0..9 {
-                for column in 0..9 {
-                    remove_conflicting_notes(self, row, column);
-                    single_note_method(self, row, column);
-                }
-            }
-
             if self.check_if_solved() {
+                println!("Solved!");
                 break;
             }
+
+            self.remove_all_conflicting_notes();
+
+            if single_note_method(self) {
+                continue;
+            }
+
+            exclusive_note_method(self);
 
             if self.check_if_stuck() {
                 println!("Got stuck");
                 break;
             }
+
         }
     }
 
@@ -58,6 +61,14 @@ impl Sudoku {
             return true;
         }
         false
+    }
+
+    fn remove_all_conflicting_notes(&mut self) {
+        for row in 0..9 {
+                for column in 0..9 {
+                    remove_conflicting_notes(self, row, column);
+                }
+            }
     }
 
 
@@ -183,7 +194,6 @@ fn translate_for_printing(index: usize) -> usize {
         _ => panic!(),
     }
 }
-
 
 fn insert_sp_chars_for_printing(printer_object: &mut [[char; 12]; 11]) {
     for row in 0..11 {

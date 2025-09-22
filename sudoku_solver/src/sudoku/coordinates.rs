@@ -2,7 +2,7 @@ use crate::sudoku::block::{map_block_to_array_of_coordinates, BlockNumber};
 
 
 /// Coordinates of any given square on a Sudoku board.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Coordinates {
     pub row_index: usize,
     pub column_index: usize,
@@ -59,6 +59,31 @@ impl Default for Coordinates {
             column_index: 0,
         }
     }
+}
+
+
+
+// Tests -------------------------------------------------------------------------
+
+#[test]
+fn get_block_coords_test() {
+    let block_number: BlockNumber = BlockNumber::One;
+    let expected_coordinates: [Coordinates; 9] = [
+        Coordinates::from(0, 0),
+        Coordinates::from(0, 1),
+        Coordinates::from(0, 2),
+
+        Coordinates::from(1, 0),
+        Coordinates::from(1, 1),
+        Coordinates::from(1, 2),
+
+        Coordinates::from(2, 0),
+        Coordinates::from(2, 1),
+        Coordinates::from(2, 2),
+        ];
+
+    assert_eq!(expected_coordinates, Coordinates::get_block_coords(block_number));
+
 }
 
 

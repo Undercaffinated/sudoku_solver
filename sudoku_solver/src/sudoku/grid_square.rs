@@ -1,7 +1,6 @@
 use crate::sudoku::grid_state::GridState;
 
 /// Defines a single square on a sudoku board.
-#[allow(unused)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct GridSquare {
     // The inked in value
@@ -68,10 +67,10 @@ impl GridSquare {
             } else if self.nine {
                 return GridState::Nine;
             } else {
-                panic!();
+                return GridState::Empty
             }
         } else {
-            panic!();
+            GridState::Empty
         }
     }
 

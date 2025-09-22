@@ -31,21 +31,7 @@ impl GridState {
         }
     }
 
-    /// Example ```from_u8(1u8) -> GridState::One```
-    pub fn from_u8(number: u8) -> Self {
-        match number {
-            1 => GridState::One,
-            2 => GridState::Two,
-            3 => GridState::Three,
-            4 => GridState::Four,
-            5 => GridState::Five,
-            6 => GridState::Six,
-            7 => GridState::Seven,
-            8 => GridState::Eight,
-            9 => GridState::Nine,
-            _ => panic!(),
-        }
-    }
+    
 }
 
 impl GridState {
@@ -68,5 +54,25 @@ impl GridState {
 impl Default for GridState {
     fn default() -> Self {
         GridState::Empty
+    }
+}
+
+
+#[allow(unused)]
+impl GridState {
+    /// Example ```from_u8(1u8) -> GridState::One```
+    pub fn from_u8(number: u8) -> Self {
+        match number {
+            1 => GridState::One,
+            2 => GridState::Two,
+            3 => GridState::Three,
+            4 => GridState::Four,
+            5 => GridState::Five,
+            6 => GridState::Six,
+            7 => GridState::Seven,
+            8 => GridState::Eight,
+            9 => GridState::Nine,
+            _ => panic!(),
+        }
     }
 }
