@@ -10,6 +10,24 @@ pub enum BlockNumber {
     Nine,
 }
 
+impl BlockNumber {
+    pub fn from_i32 (input: i32) -> Self {
+        match input {
+            1 => BlockNumber::One,
+            2 => BlockNumber::Two,
+            3 => BlockNumber::Three,
+            4 => BlockNumber::Four,
+            5 => BlockNumber::Five,
+            6 => BlockNumber::Six,
+            7 => BlockNumber::Seven,
+            8 => BlockNumber::Eight,
+            9 => BlockNumber::Nine,
+            _ => panic!()
+        }
+    }
+}
+
+
 pub fn map_coordinates_to_block(row_index: usize, column_index: usize) -> BlockNumber {
     match (row_index, column_index) {
         (0..3, 0..3) => BlockNumber::One,
@@ -28,6 +46,7 @@ pub fn map_coordinates_to_block(row_index: usize, column_index: usize) -> BlockN
     }
 }
 
+/// Where BlockNumber '1' => Upper-Left Corner
 pub fn map_block_to_array_of_coordinates(block: BlockNumber) -> [(usize, usize); 9] {
     match block {
         // BlockNumber => [(row_index, column_index); 9]

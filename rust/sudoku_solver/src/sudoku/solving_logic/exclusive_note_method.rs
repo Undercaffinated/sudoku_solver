@@ -1,3 +1,4 @@
+use crate::sudoku::block::BlockNumber;
 use crate::sudoku::coordinates::Coordinates;
 use crate::sudoku::grid_square::GridSquare;
 use crate::sudoku::sudoku::Sudoku;
@@ -9,37 +10,47 @@ use crate::sudoku::grid_state::GridState;
 pub fn exclusive_note_method(board: &mut Sudoku) {
     // Check all the rows
     for rows in 0..9 {
-        let row_elements: [Coordinates; 9] = Coordinates::get_row_coords(rows);
-        ink_exclusive_notes_in_set(board, row_elements);
+        let elements: [Coordinates; 9] = Coordinates::get_row_coords(rows);
+        ink_exclusive_notes_in_set(board, elements);
     }
 
-    // TODO: for columns ...
-    // TODO: for blocks...
+    for columns in 0..9 {
+        let elements: [Coordinates; 9] = Coordinates::get_column_coords(columns);
+        ink_exclusive_notes_in_set(board, elements);
+    }
+    
+    for blocks in 0..9 {
+        let elements: [Coordinates; 9] = Coordinates::get_block_coords(BlockNumber::from_i32(blocks));
+        ink_exclusive_notes_in_set(board, elements);
+    }
 }
 
 fn ink_exclusive_notes_in_set(board: &mut Sudoku, coords: [Coordinates; 9]) {
-    // Construct an array that will be used to count instances of notes.
-    // In other words, counts[0] is the number of one notes in the set, and so on.
     let mut counts: [u8; 9] = [0; 9];
 
-    for each in set {
-        add_assign_arrays(&mut counts, &each.notes_array());
+    for each in coords {
+        add_assign_arrays(&mut counts, &board.get_square(each).notes_array());
     }
 
     // Check if any elements in the counts array indicate there is only one instance in the set.
-    
-}
-
-
-fn find_and_ink(set: [&mut GridSquare; 9], target_note: u8) {
-    for each in set {
-        if each.check_note(target_note as usize) {
-            each.ink(GridState::from_u8(target_note));
+    for index in 0..9 {
+        if counts[index] == 1 {
+            find_and_ink(board, coords, (index + 1) as u8);
         }
     }
 }
 
 
+fn find_and_ink(board: &mut Sudoku, coordinates: [Coordinates; 9], target_note: u8) {
+    for each in coordinates {
+        if board.get_square(each).check_note(target_note as usize) {
+            board.get_square(each).ink(GridState::from_u8(target_note));
+        }
+    }
+}
+
+
+#[allow(unused)]
 /// Left += Right
 fn add_assign_arrays(left: &mut [u8; 9], right: &[u8; 9]) {
     for index in 0..9 {
