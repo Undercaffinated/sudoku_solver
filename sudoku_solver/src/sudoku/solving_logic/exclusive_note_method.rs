@@ -18,7 +18,7 @@ pub fn exclusive_note_method(board: &mut Sudoku) {
     }
     
     for blocks in 0..9 {
-        let elements: [Coordinates; 9] = Coordinates::get_block_coords(BlockNumber::from_i32(blocks));
+        let elements: [Coordinates; 9] = Coordinates::get_block_coords(BlockNumber::from_i32(blocks + 1));
         if ink_exclusive_notes_in_set(board, elements) { return; }
     }
 }
