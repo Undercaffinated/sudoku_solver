@@ -3,7 +3,7 @@ CLI tool to help solve sudokus
 
 ## How to Use
 To run, navigate into the crate and use
-```cargo run \_filename\_```
+```cargo run 'filename'```
 
 The test boards included can be found in ```boards/examples/```
 
