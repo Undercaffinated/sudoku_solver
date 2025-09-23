@@ -1,12 +1,9 @@
 # sudoku_solver
-Simple CLI tool to help solve sudokus
+CLI tool to help solve sudokus
 
-# How to Use
-This tool loads a board from a text file whose filename is supplied as an argument.
-
-For the Rust implementation, navigate to ~sudoku_solver/rust/sudoku_solver, then use:
-```bash
-cargo run boards/examples/easy_example_1.txt
+## How to Use
+To run, navigate into the crate 
+cargo run *filename*
 
 ```
 To solve your own puzzles, you will need to create a new text file formatted in the
