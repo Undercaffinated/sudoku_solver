@@ -57,12 +57,10 @@ impl Sudoku {
     /// Returns true when the function detects that no change has occurred
     /// between solving iterations.
     fn check_if_stuck(&self) -> bool {
-        if self.grid == self.previous_grid {
-            return true;
-        }
-        false
+        self.grid == self.previous_grid
     }
 
+    /// Iterates over the board's squares, removing notes that conflict with inked values.
     fn remove_all_conflicting_notes(&mut self) {
         for row in 0..9 {
                 for column in 0..9 {
@@ -79,14 +77,7 @@ impl Sudoku {
 
 // Constructor-Style Functions
 impl Sudoku {
-    pub fn from_file(maybe_contents: Option<String>) -> Self {
-        match maybe_contents {
-            None => Sudoku::default(),
-            Some(content) => Sudoku::from_string(content),
-        }
-    }
-
-    fn from_string(input: String) -> Self {
+    pub fn from_string(input: String) -> Self {
         let input: Vec<char> = input.chars().collect();
         let mut temp_grid: [[GridSquare; 9]; 9] = [[GridSquare::default(); 9]; 9];
 
@@ -109,32 +100,6 @@ impl Sudoku {
 impl Sudoku {
     pub fn get_square(&mut self, coordinates: Coordinates) -> &mut GridSquare {
         &mut self.grid[coordinates.row_index][coordinates.column_index]
-    }
-}
-
-
-
-// For managing notes and inked values
-impl Sudoku {
-    /// After initial construction, all empty squares on a sudoku board will claim they can
-    /// be any number, based on their notes. This removes all impossible note values based on
-    /// the inked values on the board. This function is expensive and should be called sparingly.
-    pub fn init_notes(&mut self) {
-        // For each square on the board,
-        // Check if it contains an inked value
-        // If so, remove that value from the notes of all containing groups.
-        for row in 0..9 {
-            for column in 0..9 {
-                match self.grid[row][column].value {
-                    // If the square is empty, it doesn't contribute to removing notes.
-                    GridState::Empty => continue,
-
-                    // If the square contains an inked value, we need to erase notes s.t.
-                    // all squares in the same row, column, and block cannot be that value.
-                    _ => remove_conflicting_notes(self, row, column),
-                }
-            }
-        }
     }
 }
 
