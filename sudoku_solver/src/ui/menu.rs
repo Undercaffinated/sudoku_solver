@@ -1,5 +1,5 @@
 use crate::ui::user_input;
-use crate::sudoku::sudoku::{self, Sudoku};
+use crate::sudoku::sudoku::Sudoku;
 use crate::validation;
 
 
@@ -22,10 +22,7 @@ pub fn main_menu() {
             _ => continue,
         }
     }
-    
-
 }
-
 
 
 fn solve_from_string() {
