@@ -1,5 +1,6 @@
 mod ui;
 mod sudoku;
+mod validation;
 
 use std::env;
 

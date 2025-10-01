@@ -6,3 +6,11 @@ pub fn get_usize() -> usize {
 
     input.trim().parse().unwrap()
 }
+
+
+pub fn get_string() -> String {
+    let mut s: String = String::new();
+    io::stdin().read_line(&mut s).unwrap();
+
+    s.trim().replace("\n", "")
+}

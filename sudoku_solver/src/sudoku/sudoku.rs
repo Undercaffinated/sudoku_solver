@@ -6,7 +6,7 @@ use crate::sudoku::solving_logic::{exclusive_note_method::*, single_note_method:
 
 use super::block::*;
 
-#[allow(unused)]
+
 pub struct Sudoku {
     // Index 0 is the upper-left corner square.
     // Index 8 is the upper-right corner.
