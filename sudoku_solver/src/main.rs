@@ -1,3 +1,7 @@
+//! # This is a test
+
+
+
 mod ui;
 mod sudoku;
 mod validation;
