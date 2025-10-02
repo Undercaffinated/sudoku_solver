@@ -1,5 +1,12 @@
-use crate::sudoku::block::{map_block_to_array_of_coordinates, BlockNumber};
+//! # Coordinates
+//! 
+//! Cartesian Product of row indexes and column indexes, packaged together for type safety
+//! and code coherence.
+//! 
+//! Note: This type is not yet universally implemented.
 
+
+use crate::sudoku::block::{map_block_to_array_of_coordinates, BlockNumber};
 
 /// Coordinates of any given square on a Sudoku board.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -7,7 +14,6 @@ pub struct Coordinates {
     pub row_index: usize,
     pub column_index: usize,
 }
-
 
 
 impl Coordinates {
@@ -49,7 +55,6 @@ impl Coordinates {
         processed
     }
 }
-
 
 
 impl Default for Coordinates {

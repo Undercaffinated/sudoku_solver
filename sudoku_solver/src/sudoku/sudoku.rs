@@ -8,14 +8,14 @@ use super::block::*;
 
 
 pub struct Sudoku {
-    // Index 0 is the upper-left corner square.
-    // Index 8 is the upper-right corner.
+    // grid: [[Gridsquare; columns]; rows];
     pub grid: [[GridSquare; 9]; 9],
     pub previous_grid: [[GridSquare; 9]; 9],
 }
 
 // Solving Methods
 impl Sudoku {
+    /// 
     pub fn solve(&mut self) {
         loop {
             self.previous_grid = self.grid;

@@ -1,5 +1,13 @@
-//! # This is a test
-
+//! # Sudoku Solver
+//! 
+//! CLI Tool for assisting users in solving sudoku puzzles.
+//! 
+//! # Usage
+//! 
+//! Syntax: ```cargo run [optional filename]```
+//! 
+//! If a filename is supplied as an argument, the program will try to read that file into a string,
+//! which is then processed into a sudoku board to be solved. Else, the program calls ```main_menu()```.
 
 
 mod ui;
