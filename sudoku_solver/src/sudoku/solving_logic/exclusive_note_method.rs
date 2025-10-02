@@ -34,7 +34,6 @@ fn ink_exclusive_notes_in_set(board: &mut Sudoku, coords: [Coordinates; 9]) -> b
     for index in 0..9 {
         if counts[index] == 1 {
             find_and_ink(board, coords, (index + 1) as u8);
-            println!("Found a {} at location (row: {}, column: {}): Exclusive Note Method", index + 1, coords[index].row_index, coords[index].column_index);
             return true;
         }
     }
@@ -47,6 +46,8 @@ fn find_and_ink(board: &mut Sudoku, coordinates: [Coordinates; 9], target_note: 
     for each in coordinates {
         if board.get_square(each).check_note(target_note as usize) {
             board.get_square(each).ink(GridState::from_u8(target_note));
+            println!("Found a {} at location (row: {}, column: {}): Exclusive Note Method", target_note, each.row_index, each.column_index);
+
         }
     }
 }
