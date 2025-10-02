@@ -18,7 +18,8 @@ use std::env;
 
 use crate::sudoku::sudoku::Sudoku;
 use crate::ui::argument_parsing::*;
-use crate::ui::menu;
+use crate::ui::menu::main_menu;
+
 
 
 fn main() {
@@ -30,6 +31,7 @@ fn main() {
         board.solve();
     }
 
-    // Else, main menu.
-    menu::main_menu();
+    else {
+        main_menu();
+    }
 }
