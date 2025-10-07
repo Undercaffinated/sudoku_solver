@@ -21,6 +21,7 @@ pub struct GridSquare {
 }
 
 
+
 impl GridSquare {
     /// Inks in a given value
     pub fn ink(&mut self, number: GridState) {
@@ -125,6 +126,21 @@ impl GridSquare {
             GridState::Seven => self.seven = false,
             GridState::Eight => self.eight = false,
             GridState::Nine => self.nine = false,
+            _ => (),
+        }
+    }
+
+    pub fn remove_note_by_usize(&mut self, note: usize) {
+        match note {
+            1 => self.one = false,
+            2 => self.two = false,
+            3 => self.three = false,
+            4 => self.four = false,
+            5 => self.five = false,
+            6 => self.six = false,
+            7 => self.seven = false,
+            8 => self.eight = false,
+            9 => self.nine = false,
             _ => (),
         }
     }
