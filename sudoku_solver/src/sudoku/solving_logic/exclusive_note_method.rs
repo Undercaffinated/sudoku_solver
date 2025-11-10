@@ -6,21 +6,23 @@ use crate::sudoku::grid_state::GridState;
 /// If a square in a row, column, or block exclusively contains some note,
 /// that square's inked value must be that exclusive value.
 /// Example: If only one square in a row has a '1' note, that square must be a 1.
-pub fn exclusive_note_method(board: &mut Sudoku) {
+pub fn exclusive_note_method(board: &mut Sudoku) -> bool {
     for rows in 0..9 {
         let elements: [Coordinates; 9] = Coordinates::get_row_coords(rows);
-        if ink_exclusive_notes_in_set(board, elements) { return; }
+        if ink_exclusive_notes_in_set(board, elements) { return true; }
     }
 
     for columns in 0..9 {
         let elements: [Coordinates; 9] = Coordinates::get_column_coords(columns);
-        if ink_exclusive_notes_in_set(board, elements) { return; }
+        if ink_exclusive_notes_in_set(board, elements) { return true; }
     }
     
     for blocks in 0..9 {
         let elements: [Coordinates; 9] = Coordinates::get_block_coords(BlockNumber::from_i32(blocks + 1));
-        if ink_exclusive_notes_in_set(board, elements) { return; }
+        if ink_exclusive_notes_in_set(board, elements) { return true; }
     }
+
+    board.grid == board.previous_grid
 }
 
 fn ink_exclusive_notes_in_set(board: &mut Sudoku, coords: [Coordinates; 9]) -> bool {

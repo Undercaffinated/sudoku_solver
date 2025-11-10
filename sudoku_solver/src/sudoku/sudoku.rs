@@ -32,7 +32,9 @@ impl Sudoku {
                 continue;
             }
 
-            exclusive_note_method(self);
+            if exclusive_note_method(self) {
+                continue;
+            }
 
             if self.check_if_stuck() {
                 println!("Got stuck");
