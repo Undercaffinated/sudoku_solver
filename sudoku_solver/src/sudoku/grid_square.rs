@@ -270,7 +270,7 @@ impl GridSquare {
 // Unit Tests
 #[test]
 fn has_one_possible_value_all_false() {
-    // Test 1: No notes are true, should return false.
+    // No notes are true, should return false.
     let t = GridSquare {
         value: GridState::One,
         one: false,
@@ -288,13 +288,13 @@ fn has_one_possible_value_all_false() {
 
 #[test]
 fn has_one_possible_value_single_true() {
-    // Test 1: No notes are true, should return false.
+    // One note is true, should return true.
     let t = GridSquare {
         value: GridState::Empty,
         one: false,
         two: false,
         three: false,
-        four: true,
+        four: true,     // True note
         five: false,
         six: false,
         seven: false,
@@ -306,7 +306,6 @@ fn has_one_possible_value_single_true() {
 
 #[test]
 fn has_one_possible_value_multiple_true() {
-    // Test 1: No notes are true, should return false.
     let t = GridSquare {
         value: GridState::Empty,
         one: true,

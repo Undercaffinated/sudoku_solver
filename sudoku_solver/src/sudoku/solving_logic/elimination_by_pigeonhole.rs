@@ -45,9 +45,7 @@ use crate::sudoku::sudoku::Sudoku;
 use crate::sudoku::grid_square::GridSquare;
 
 
-//  fn could_you_imagine_if_this_works() {
-//      // Wrapper for pigeonhole which can literally just switch the row and column variables.
-// }
+
 
 
 fn pigeonhole(board: &mut Sudoku, row_index: usize, note: usize) {

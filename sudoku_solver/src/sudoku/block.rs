@@ -13,6 +13,7 @@
 //! Note: Blocks, and by extension ```BlockNumbers``` are not zero indexed for a handful of reasons.
 //! - Blocks are not intended to be iterated over.
 //! - There is no proper Block struct. Blocks are only used as conceptual tools.
+//! 
 
 
 /// List of postitions a given Block can be in.
